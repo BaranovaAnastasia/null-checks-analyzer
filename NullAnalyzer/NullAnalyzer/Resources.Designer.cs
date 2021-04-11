@@ -70,7 +70,7 @@ namespace NullAnalyzer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Null check &apos;{0}&apos; must be removed..
+        ///   Looks up a localized string similar to Null check must be removed..
         /// </summary>
         internal static string AnalyzerMessageFormat {
             get {

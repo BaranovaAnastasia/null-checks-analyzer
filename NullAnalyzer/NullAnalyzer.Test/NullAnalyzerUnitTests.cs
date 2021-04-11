@@ -115,6 +115,34 @@ namespace testCompiler
             await VerifyCS.VerifyAnalyzerAsync(test);
         }
 
+        [TestMethod]
+        public async Task TestConditionalExpressionNoDiagnostics()
+        {
+            var test = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+            string obj2 = ""123"";
+
+            string str1 = obj == ""123"" ? ""a"" : ""b"";
+            string str2 = obj is string ? ""a"" : ""b"";
+            string str3 = Object.ReferenceEquals(obj, obj2) ? ""a"" : ""b"";
+            string str4 = Object.ReferenceEquals(obj2, obj) ? ""a"" : ""b"";
+            string str5 = !(obj is string) ? ""a"" : ""b"";
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyAnalyzerAsync(test);
+        }
+
 
 
 
@@ -404,6 +432,54 @@ namespace testCompiler
             await VerifyCS.VerifyCodeFixAsync(test, fixTest);
         }
 
+        [TestMethod]
+        public async Task TestConditionalExpression()
+        {
+            var test = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = [|obj == null ? ""a"" : ""b""|];
+            string str2 = [|obj is null ? ""a"" : ""b""|];
+            string str3 = [|Object.ReferenceEquals(obj, null) ? ""a"" : ""b""|];
+            string str4 = [|Object.ReferenceEquals(null, obj) ? ""a"" : ""b""|];
+            string str5 = [|!(obj is object) ? ""a"" : ""b""|];
+        }
+    }
+}
+";
+
+            var fixTest = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = ""b"";
+            string str2 = ""b"";
+            string str3 = ""b"";
+            string str4 = ""b"";
+            string str5 = ""b"";
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyCodeFixAsync(test, fixTest);
+        }
+
 
 
 
@@ -500,6 +576,86 @@ namespace testCompiler
             {
                 Console.WriteLine(""ghi"");
             }
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyCodeFixAsync(test, fixTest);
+        }
+
+        [TestMethod]
+        public async Task TestCorrectFix3()
+        {
+            var test = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = [|obj == null ? ""a"" : obj == ""abc"" ? ""q"" : ""w""|];
+        }
+    }
+}
+";
+
+            var fixTest = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = obj == ""abc"" ? ""q"" : ""w"";
+        }
+    }
+}
+";
+
+            await VerifyCS.VerifyCodeFixAsync(test, fixTest);
+        }
+
+        [TestMethod]
+        public async Task TestCorrectFix4()
+        {
+            var test = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = [|obj == null ? ""a"" : [|obj is null ? ""q"" : ""w""|]|];
+        }
+    }
+}
+";
+
+            var fixTest = @"
+using System;
+
+namespace testCompiler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string obj = null;
+
+            string str1 = ""w"";
         }
     }
 }

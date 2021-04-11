@@ -45,6 +45,20 @@ namespace NullAnalyzer
                 return;
             }
 
+            // Null checks in conditional expressions.
+            var declarationConditionalExpr = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ConditionalExpressionSyntax>().ToArray();
+
+            if (declarationConditionalExpr.Any())
+            {
+                context.RegisterCodeFix(
+                    CodeAction.Create(
+                        title: CodeFixResources.CodeFixTitle,
+                        createChangedDocument: c => DeleteConditionalNullCheckAsync(context.Document, declarationConditionalExpr.First(), c),
+                        equivalenceKey: nameof(CodeFixResources.CodeFixTitle)),
+                    diagnostic);
+                return;
+            }
+
             // Null checks in Coalesce expressions.
             var declarationCoalesceExpr = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<BinaryExpressionSyntax>().ToArray();
 
@@ -57,7 +71,6 @@ namespace NullAnalyzer
                         equivalenceKey: nameof(CodeFixResources.CodeFixTitle)),
                     diagnostic);
             }
-
         }
 
         /// <summary>
@@ -102,6 +115,18 @@ namespace NullAnalyzer
         {
             SyntaxNode oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             SyntaxNode newRoot = oldRoot.ReplaceNode(ceStatement, ceStatement.Left).WithAdditionalAnnotations(Formatter.Annotation);
+
+            // Return document with transformed tree.
+            return document.WithSyntaxRoot(newRoot);
+        }
+
+        /// <summary>
+        /// Removes conditional expression with null check as if the value that is being checked for null is never null.
+        /// </summary>
+        private async Task<Document> DeleteConditionalNullCheckAsync(Document document, ConditionalExpressionSyntax ceStatement, CancellationToken cancellationToken)
+        {
+            SyntaxNode oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+            SyntaxNode newRoot = oldRoot.ReplaceNode(ceStatement, ceStatement.WhenFalse).WithAdditionalAnnotations(Formatter.Annotation);
 
             // Return document with transformed tree.
             return document.WithSyntaxRoot(newRoot);

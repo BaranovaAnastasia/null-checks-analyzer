@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -31,6 +32,11 @@ namespace NullAnalyzer
             context.RegisterSyntaxNodeAction(AnalyzeNullCheck_NotObject, SyntaxKind.IfStatement);
 
             context.RegisterSyntaxNodeAction(AnalyzeNullCheck_CoalesceExpression, SyntaxKind.CoalesceExpression);
+
+            context.RegisterSyntaxNodeAction(AnalyzeNullCheck_EqualsConditionalExpression, SyntaxKind.ConditionalExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeNullCheck_IsConditionalExpression, SyntaxKind.ConditionalExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeNullCheck_ReferenceEqualsConditionalExpression, SyntaxKind.ConditionalExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeNullCheck_NotObjectConditionalExpression, SyntaxKind.ConditionalExpression);
         }
 
         /// <summary>
@@ -39,10 +45,86 @@ namespace NullAnalyzer
         private void AnalyzeNullCheck_EqualsExpression(SyntaxNodeAnalysisContext context)
         {
             var ifStatement = (IfStatementSyntax)context.Node;
+            EqualsCheck(context, ifStatement.Condition);
+        }
 
-            if (ifStatement.Condition.IsKind(SyntaxKind.EqualsExpression))
+        /// <summary>
+        /// Analyzes null checks like: if (obj is null)
+        /// </summary>
+        private void AnalyzeNullCheck_IsPattern(SyntaxNodeAnalysisContext context)
+        {
+            var ifStatement = (IfStatementSyntax)context.Node;
+            IsPatternCheck(context, ifStatement.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: if (Object.ReferenceEquals(null, obj))
+        /// </summary>
+        private void AnalyzeNullCheck_ReferenceEquals(SyntaxNodeAnalysisContext context)
+        {
+            var ifStatement = (IfStatementSyntax)context.Node;
+            ReferenceEqualCheck(context, ifStatement.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: if (!(obj is object))
+        /// </summary>
+        private void AnalyzeNullCheck_NotObject(SyntaxNodeAnalysisContext context)
+        {
+            var ifStatement = (IfStatementSyntax)context.Node;
+            NotObjectCheck(context, ifStatement.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: obj = obj1 ?? obj2;
+        /// </summary>
+        private void AnalyzeNullCheck_CoalesceExpression(SyntaxNodeAnalysisContext context)
+        {
+            context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: obj = obj1 == null ? obj2 : obj3;
+        /// </summary>
+        private void AnalyzeNullCheck_EqualsConditionalExpression(SyntaxNodeAnalysisContext context)
+        {
+            var expr = (ConditionalExpressionSyntax)context.Node;
+            EqualsCheck(context, expr.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: obj = obj1 is null ? obj2 : obj3;
+        /// </summary>
+        private void AnalyzeNullCheck_IsConditionalExpression(SyntaxNodeAnalysisContext context)
+        {
+            var expr = (ConditionalExpressionSyntax)context.Node;
+            IsPatternCheck(context, expr.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: obj = Object.ReferenceEquals(null, obj) ? obj2 : obj3;
+        /// </summary>
+        private void AnalyzeNullCheck_ReferenceEqualsConditionalExpression(SyntaxNodeAnalysisContext context)
+        {
+            var expr = (ConditionalExpressionSyntax)context.Node;
+            ReferenceEqualCheck(context, expr.Condition);
+        }
+
+        /// <summary>
+        /// Analyzes null checks like: obj = !(obj is object) ? obj2 : obj3;
+        /// </summary>
+        private void AnalyzeNullCheck_NotObjectConditionalExpression(SyntaxNodeAnalysisContext context)
+        {
+            var expr = (ConditionalExpressionSyntax)context.Node;
+            NotObjectCheck(context, expr.Condition);
+        }
+
+
+        private void EqualsCheck(SyntaxNodeAnalysisContext context, ExpressionSyntax conditionExpr)
+        {
+            if (conditionExpr.IsKind(SyntaxKind.EqualsExpression))
             {
-                var equalsExpr = (BinaryExpressionSyntax)ifStatement.Condition;
+                var equalsExpr = (BinaryExpressionSyntax)conditionExpr;
 
                 if (!equalsExpr.Left.IsKind(SyntaxKind.NullLiteralExpression) &&
                     !equalsExpr.Right.IsKind(SyntaxKind.NullLiteralExpression))
@@ -58,16 +140,11 @@ namespace NullAnalyzer
             context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
         }
 
-        /// <summary>
-        /// Analyzes null checks like: if (obj is null)
-        /// </summary>
-        private void AnalyzeNullCheck_IsPattern(SyntaxNodeAnalysisContext context)
+        private void IsPatternCheck(SyntaxNodeAnalysisContext context, ExpressionSyntax conditionExpr)
         {
-            var ifStatement = (IfStatementSyntax)context.Node;
-
-            if (ifStatement.Condition.IsKind(SyntaxKind.IsPatternExpression))
+            if (conditionExpr.IsKind(SyntaxKind.IsPatternExpression))
             {
-                var isExpr = (IsPatternExpressionSyntax)ifStatement.Condition;
+                var isExpr = (IsPatternExpressionSyntax)conditionExpr;
 
                 if (!isExpr.Pattern.IsKind(SyntaxKind.ConstantPattern) ||
                     !((ConstantPatternSyntax)(isExpr.Pattern)).Expression.IsKind(SyntaxKind.NullLiteralExpression))
@@ -82,17 +159,12 @@ namespace NullAnalyzer
 
             context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
         }
-
-        /// <summary>
-        /// Analyzes null checks like: if (Object.ReferenceEquals(null, obj))
-        /// </summary>
-        private void AnalyzeNullCheck_ReferenceEquals(SyntaxNodeAnalysisContext context)
+        
+        private void ReferenceEqualCheck(SyntaxNodeAnalysisContext context, ExpressionSyntax conditionExpr)
         {
-            var ifStatement = (IfStatementSyntax)context.Node;
-
-            if (ifStatement.Condition.IsKind(SyntaxKind.InvocationExpression))
+            if (conditionExpr.IsKind(SyntaxKind.InvocationExpression))
             {
-                var condition = (InvocationExpressionSyntax)ifStatement.Condition;
+                var condition = (InvocationExpressionSyntax)conditionExpr;
                 var invocation = condition.Expression;
                 var args = condition.ArgumentList;
 
@@ -130,19 +202,14 @@ namespace NullAnalyzer
             context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
         }
 
-        /// <summary>
-        /// Analyzes null checks like: if (!(obj is object))
-        /// </summary>
-        private void AnalyzeNullCheck_NotObject(SyntaxNodeAnalysisContext context)
+        private void NotObjectCheck(SyntaxNodeAnalysisContext context, ExpressionSyntax conditionExpr)
         {
-            var ifStatement = (IfStatementSyntax)context.Node;
-
-            if (!ifStatement.Condition.IsKind(SyntaxKind.LogicalNotExpression))
+            if (!conditionExpr.IsKind(SyntaxKind.LogicalNotExpression))
             {
                 return;
             }
 
-            var operand = ((PrefixUnaryExpressionSyntax)ifStatement.Condition).Operand;
+            var operand = ((PrefixUnaryExpressionSyntax)conditionExpr).Operand;
 
             if (!operand.IsKind(SyntaxKind.ParenthesizedExpression))
             {
@@ -156,10 +223,10 @@ namespace NullAnalyzer
                 var isExpr = (BinaryExpressionSyntax)inner;
 
                 if ((!isExpr.Right.IsKind(SyntaxKind.PredefinedType) ||
-                    !((PredefinedTypeSyntax)isExpr.Right).Keyword.IsKind(SyntaxKind.ObjectKeyword))
+                     !((PredefinedTypeSyntax)isExpr.Right).Keyword.IsKind(SyntaxKind.ObjectKeyword))
                     &&
                     (!isExpr.Right.IsKind(SyntaxKind.IdentifierName) ||
-                    ((IdentifierNameSyntax)isExpr.Right).Identifier.ValueText != "Object"))
+                     ((IdentifierNameSyntax)isExpr.Right).Identifier.ValueText != "Object"))
                 {
                     return;
                 }
@@ -171,14 +238,5 @@ namespace NullAnalyzer
 
             context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
         }
-
-        /// <summary>
-        /// Analyzes null checks like: obj = obj1 ?? obj2;
-        /// </summary>
-        private void AnalyzeNullCheck_CoalesceExpression(SyntaxNodeAnalysisContext context)
-        {
-            context.ReportDiagnostic(Diagnostic.Create(Rule, context.Node.GetLocation()));
-        }
-
     }
 }
