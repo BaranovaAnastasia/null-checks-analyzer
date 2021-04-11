@@ -1,0 +1,16 @@
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\tools\install.ps1
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\tools\uninstall.ps1
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.Package.deps.json
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.Package.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.Package.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.CodeFixes.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.CodeFixes.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\bin\Debug\netstandard2.0\NullAnalyzer.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.csprojAssemblyReference.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.AssemblyInfoInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.AssemblyInfo.cs
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.csproj.CoreCompileInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.csproj.CopyComplete
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.Package\obj\Debug\netstandard2.0\NullAnalyzer.Package.pdb

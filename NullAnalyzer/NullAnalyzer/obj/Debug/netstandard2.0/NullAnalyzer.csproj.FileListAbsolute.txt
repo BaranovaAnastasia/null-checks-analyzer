@@ -1,0 +1,11 @@
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\bin\Debug\netstandard2.0\NullAnalyzer.deps.json
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\bin\Debug\netstandard2.0\NullAnalyzer.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\bin\Debug\netstandard2.0\NullAnalyzer.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.csprojAssemblyReference.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.Resources.resources
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.csproj.GenerateResource.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.AssemblyInfoInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.AssemblyInfo.cs
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.csproj.CoreCompileInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer\obj\Debug\netstandard2.0\NullAnalyzer.pdb

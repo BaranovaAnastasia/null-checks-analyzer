@@ -1,0 +1,14 @@
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\bin\Debug\netstandard2.0\NullAnalyzer.CodeFixes.deps.json
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\bin\Debug\netstandard2.0\NullAnalyzer.CodeFixes.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\bin\Debug\netstandard2.0\NullAnalyzer.CodeFixes.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\bin\Debug\netstandard2.0\NullAnalyzer.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\bin\Debug\netstandard2.0\NullAnalyzer.pdb
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.csprojAssemblyReference.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixResources.resources
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.csproj.GenerateResource.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.AssemblyInfoInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.AssemblyInfo.cs
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.csproj.CoreCompileInputs.cache
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.csproj.CopyComplete
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.dll
+C:\Users\Anastasia\Desktop\NullDetector\NullAnalyzer\NullAnalyzer\NullAnalyzer.CodeFixes\obj\Debug\netstandard2.0\NullAnalyzer.CodeFixes.pdb
